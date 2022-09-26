@@ -1,7 +1,11 @@
 {% extends 'base.html' %}
+{% load static %}
 
 {% block title %}Марка {{ data.title }}{% endblock %}
 
 {% block content %}
     <div>Автомобили {{ data.title }}</div>
+    <img src='{% static data.imagePath %}' height="380" width="500">
+    <div>Тип двигателя: {{ data.description.eng_type }}</div>
+    <div>Страна производитель: {{ data.description.country }}</div>
 {% endblock %}
