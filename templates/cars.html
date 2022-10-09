@@ -1,13 +1,14 @@
 {% extends 'base.html' %}
+{% load static %}
 
-{% block title %}Главная страница{% endblock %}
+{% block title %}Марка {{ data.brand }}{% endblock %}
 
 {% block content %}
-<ul>
-    {% for order in data.orders %}
-       {% include 'car_element.html' with element=order %}
-    {% empty %}
-        <li>Список пуст</li>
+    {% for car in data.cars %}
+        <div>Автомобиль {{ car.car_info }}</div>
+        <img src='{% static car.photo %}' height="350" width="500">
+        <div>Тип двигателя: {{ car.engine_type.title }}</div>
+        <div>Страна производитель: {{ data.brand.country }}</div>
+        <div></div>
     {% endfor %}
-</ul>
 {% endblock %}

@@ -20,6 +20,6 @@ from bmstu_lab import views
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('', views.GetCars),
-    path('car/<str:title>/', views.GetCar, name='car_url'),
+    path('', views.GetBrands),
+    path('car/<int:id>/', views.GetCars, name='brand_url'),
 ]
