@@ -2,31 +2,26 @@ from django.db import models
 
 # Create your models here.
 
-#
-# CREATE TABLE Cars (
-# id integer NOT NULL,
-# price numeric not NULL,
-# title CHAR(30) NOT NULL,
-# mileage CHAR(255) NOT NULL,
-# engine_type_id integer NOT NULL,
-# gearbox_id integer NOT NULL,
-# drive_id integer NOT NULL,
-# brand_id integer NOT NULL,
-# FOREIGN KEY (engine_type_id) REFERENCES Engine_types(id),
-# FOREIGN KEY (transmission_id) REFERENCES Transmissions(id),
-# FOREIGN KEY (drive_id) REFERENCES Drives(id),
-# FOREIGN KEY (brand_id) REFERENCES Brands(id),
-# PRIMARY KEY (id)
-# );
+class Orders(models.Model):
+    price = models.IntegerField(verbose_name='Цена')
+    priority = models.IntegerField(verbose_name='Приоритет')
+    address_take = models.CharField(max_length=150, verbose_name='Адрес получения')
+    address_delivery = models.CharField(max_length=150, verbose_name='Адрес выдачи')
+    time = models.DateTimeField(verbose_name='Время выдачи')
+    driver = models.ForeignKey('Drivers', on_delete=models.PROTECT, verbose_name='Водитель id')
+    car = models.ForeignKey('Cars', on_delete=models.PROTECT, verbose_name='Автомобиль id')
+    def __str__(self):
+        return f'Заказ номер {self.id}: {self.address_take} -> {self.address_delivery}'
+
+    class Meta:
+        verbose_name = 'Заказ'
+        verbose_name_plural = 'Заказы'
 
 class Cars(models.Model):
     title = models.CharField(max_length=150, verbose_name='Название модели')
     price = models.IntegerField(verbose_name='Цена')
-    mileage = models.IntegerField(verbose_name='Пробег')
-    photo = models.ImageField(upload_to='photo/', blank=True, verbose_name='Фото')
-    engine_type = models.ForeignKey('Engine_types', on_delete=models.PROTECT, verbose_name='Тип двигателя')
-    gearbox = models.ForeignKey('Gearboxes', on_delete=models.PROTECT, verbose_name='Корбка передач')
-    drive = models.ForeignKey('Drives', on_delete=models.PROTECT, verbose_name='Привод')
+    useful_capacity = models.FloatField(verbose_name='Полезный объём')
+    photo = models.ImageField(upload_to='images/', blank=True, verbose_name='Фото')
     brand = models.ForeignKey('Brands', on_delete=models.PROTECT, verbose_name='Марка')
 
     def __str__(self):
@@ -37,65 +32,20 @@ class Cars(models.Model):
         verbose_name = 'Автомобиль'
         verbose_name_plural = 'Автомобили'
 
-#
-# CREATE TABLE Transmissions (
-# id integer NOT NULL,
-# title CHAR(30) NOT NULL,
-# PRIMARY KEY (id)
-# );
-
-class Gearboxes(models.Model):
-    title = models.CharField(max_length=150, verbose_name='Коробка передач')
+class Drivers(models.Model):
+    name = models.CharField(max_length=20, verbose_name='Имя')
+    surname = models.CharField(max_length=20, verbose_name='Фамилия')
+    passport_number = models.IntegerField(unique=True, verbose_name='Номер паспорта')
 
     def __str__(self):
         return self.title
 
     class Meta:
-        verbose_name = 'Коробка передач'
-        verbose_name_plural = 'Коробки передач'
-
-#
-# CREATE TABLE Drives (
-# id integer NOT NULL,
-# title CHAR(30) NOT NULL,
-# PRIMARY KEY (id)
-# );
-
-class Drives(models.Model):
-    title = models.CharField(max_length=150, verbose_name='Привод')
-
-    def __str__(self):
-        return self.title
-
-    class Meta:
-        verbose_name = 'Привод'
-        verbose_name_plural = 'Приводы'
-#
-# CREATE TABLE Engine_types (
-# id integer NOT NULL,
-# title CHAR(30) NOT NULL,
-# PRIMARY KEY (id)
-# );
-
-class Engine_types(models.Model):
-    title = models.CharField(max_length=150, verbose_name='Тип двигателя')
-
-    def __str__(self):
-        return self.title
-
-    class Meta:
-        verbose_name = 'Тип двигателя'
-        verbose_name_plural = 'Типы двигателей'
-
-# CREATE TABLE Brands (
-# id integer NOT NULL,
-# title CHAR(30) NOT NULL,
-# country CHAR(30) NOT NULL,
-# PRIMARY KEY (id)
-# );
+        verbose_name = 'Водитель'
+        verbose_name_plural = 'Водители'
 
 class Brands(models.Model):
-    title = models.CharField(max_length=150, verbose_name='Марка')
+    title = models.CharField(unique=True, max_length=150, verbose_name='Марка')
     country = models.CharField(max_length=150, verbose_name='Страна производителя')
 
     def __str__(self):
