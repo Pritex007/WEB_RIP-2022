@@ -5,9 +5,9 @@
 {% block content %}
     {% for car in data.cars %}
         <p>
-            <div>Автомобиль {{ data.brand }} {{ car.title }}</div>
+            <div>Автомобиль {{ car.photo.url }} {{ car.title }}</div>
             {% if car.photo %}
-                <img src="{{ car.photo.url }}" height="350" width="500">
+                <img src="{{car.photo.url}}" height="350" width="500">
             {% endif %}
             <div>Страна производитель: {{ data.brand.country }}</div>
             <div>Цена в час: {{ car.price }} руб.</div>
