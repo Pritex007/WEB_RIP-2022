@@ -1,7 +1,8 @@
 from .models import Cars
 from .models import Brands
-from .models import Drivers
+# from .models import Drivers
 from .models import Orders
+from .models import UserProfile
 from rest_framework import serializers
 
 
@@ -10,14 +11,14 @@ class CarSerializer(serializers.ModelSerializer):
         # Модель, которую мы сериализуем
         model = Cars
         # Поля, которые мы сериализуем
-        fields = ["pk", "title", "price", "useful_capacity", "photo", "brand"]
+        fields = ["pk", "title", "price", "capacity", "photo", "brand", "payload", "description"]
 
 class OrderSerializer(serializers.ModelSerializer):
     class Meta:
         # Модель, которую мы сериализуем
         model = Orders
         # Поля, которые мы сериализуем
-        fields = ["pk", "price", "priority", "address_take", "address_delivery", "time", "driver", "car"]
+        fields = ["pk", "price", "address_take", "time", "car", "user"]
 
 class BrandSerializer(serializers.ModelSerializer):
     class Meta:
@@ -26,9 +27,16 @@ class BrandSerializer(serializers.ModelSerializer):
         # Поля, которые мы сериализуем
         fields = ["pk", "title", "country"]
 
-class DriverSerializer(serializers.ModelSerializer):
+class UserSerializer(serializers.ModelSerializer):
     class Meta:
         # Модель, которую мы сериализуем
-        model = Cars
+        model = UserProfile
         # Поля, которые мы сериализуем
-        fields = ["pk", "name", "surname", "passport_number"]
+        fields = ["pk", "username"]
+
+# class DriverSerializer(serializers.ModelSerializer):
+#     class Meta:
+#         # Модель, которую мы сериализуем
+#         model = Cars
+#         # Поля, которые мы сериализуем
+#         fields = ["pk", "name", "surname", "passport_number"]
