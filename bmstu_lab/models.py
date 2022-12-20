@@ -8,7 +8,7 @@ from django.contrib.auth.models import User
 class UserProfile(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
     def __str__(self):
-        return f'Клиент {self.id} --- {self.login}'
+        return f'Клиент {self.id}'
     class Meta:
         verbose_name = 'Клиент'
         verbose_name_plural = 'Клиенты'
@@ -21,7 +21,7 @@ class Orders(models.Model):
     time = models.DateTimeField(verbose_name='Время выдачи')
     # driver = models.ForeignKey('Drivers', on_delete=models.PROTECT, verbose_name='Водитель id')
     car = models.ForeignKey('Cars', on_delete=models.PROTECT, verbose_name='Автомобиль id')
-    UserProfile = models.ForeignKey('UserProfile', on_delete=models.PROTECT, verbose_name='Клиент')
+    userProfile = models.ForeignKey('userProfile', on_delete=models.PROTECT, verbose_name='Клиент')
     def __str__(self):
         return f'Заказ номер {self.id}: {self.address_take} -> {self.address_delivery}'
 

@@ -48,9 +48,11 @@ class LoginView(APIView):
 
         try:
             user = auth.authenticate(username=username, password=password)
+            user_profile = UserProfile.objects.get(user=user)
+
             if user is not None:
                 auth.login(request, user)
-                return Response({ 'success': 'User authenticated' })
+                return Response({ 'success': 'User authenticated', 'userProfileId': user_profile.id})
             else:
                 return Response({ 'error': 'Error Authenticating' })
         except:

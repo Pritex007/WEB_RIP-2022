@@ -18,7 +18,7 @@ class OrderSerializer(serializers.ModelSerializer):
         # Модель, которую мы сериализуем
         model = Orders
         # Поля, которые мы сериализуем
-        fields = ["pk", "price", "address_take", "time", "car", "user"]
+        fields = ["pk", "price", "address_take", "time", "car", "userProfile"]
 
 class BrandSerializer(serializers.ModelSerializer):
     class Meta:
