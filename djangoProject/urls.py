@@ -22,7 +22,7 @@ from bmstu_lab import views
 
 router = routers.DefaultRouter()
 router.register(r'cars', views.CarViewSet)
-router.register(r'brands', views.BrandViewSet)
+# router.register(r'brands', views.BrandViewSet)
 router.register(r'orders', views.OrderViewSet)
 router.register(r'users', views.UsersViewSet)
 # router.register(r'drivers', views.DriverViewSet)

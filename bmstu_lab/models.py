@@ -7,6 +7,7 @@ from django.contrib.auth.models import User
 
 class UserProfile(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
+    isManager = models.BooleanField(verbose_name='является Менеджером')
     def __str__(self):
         return f'Клиент {self.id}'
     class Meta:
@@ -21,9 +22,14 @@ class Orders(models.Model):
     time = models.DateTimeField(verbose_name='Время выдачи')
     # driver = models.ForeignKey('Drivers', on_delete=models.PROTECT, verbose_name='Водитель id')
     car = models.ForeignKey('Cars', on_delete=models.PROTECT, verbose_name='Автомобиль id')
+    date_create = models.DateTimeField(verbose_name='Время создания заказа', null=True)
+    date_start = models.DateTimeField(verbose_name='Время начала выполнения заказа', null=True)
+    date_end = models.DateTimeField(verbose_name='Время завершения заказа', null=True)
+    driver = models.CharField(max_length=30, verbose_name='Водитель', blank="", null=True)
     userProfile = models.ForeignKey('userProfile', on_delete=models.PROTECT, verbose_name='Клиент')
-    def __str__(self):
-        return f'Заказ номер {self.id}: {self.address_take} -> {self.address_delivery}'
+    status = models.CharField(max_length=30, verbose_name='Статус')
+    # def __str__(self):
+    #     return f'Заказ номер {self.id}: {self.address_take}'
 
     class Meta:
         verbose_name = 'Заказ'
@@ -34,7 +40,7 @@ class Cars(models.Model):
     price = models.IntegerField(verbose_name='Цена')
     capacity = models.FloatField(verbose_name='Полезный объём')
     photo = models.CharField(max_length=300, verbose_name='URL фото')
-    brand = models.ForeignKey('Brands', on_delete=models.PROTECT, verbose_name='Марка')
+    brand = models.CharField(max_length=150, verbose_name='Марка')
     payload = models.FloatField(verbose_name='Грузоподъемность')
     description = models.CharField(max_length=200, verbose_name='Описание')
 
@@ -58,13 +64,13 @@ class Cars(models.Model):
 #         verbose_name = 'Водитель'
 #         verbose_name_plural = 'Водители'
 
-class Brands(models.Model):
-    title = models.CharField(unique=True, max_length=150, verbose_name='Марка')
-    country = models.CharField(max_length=150, verbose_name='Страна производителя')
-
-    def __str__(self):
-        return self.title
-
-    class Meta:
-        verbose_name = 'Марка'
-        verbose_name_plural = 'Марки'
+# class Brands(models.Model):
+#     title = models.CharField(unique=True, max_length=150, verbose_name='Марка')
+#     country = models.CharField(max_length=150, verbose_name='Страна производителя')
+#
+#     def __str__(self):
+#         return self.title
+#
+#     class Meta:
+#         verbose_name = 'Марка'
+#         verbose_name_plural = 'Марки'

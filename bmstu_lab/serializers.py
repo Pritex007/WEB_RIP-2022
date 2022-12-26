@@ -1,5 +1,5 @@
 from .models import Cars
-from .models import Brands
+# from .models import Brands
 # from .models import Drivers
 from .models import Orders
 from .models import UserProfile
@@ -18,14 +18,15 @@ class OrderSerializer(serializers.ModelSerializer):
         # Модель, которую мы сериализуем
         model = Orders
         # Поля, которые мы сериализуем
-        fields = ["pk", "price", "address_take", "time", "car", "userProfile"]
+        fields = ["pk", "price", "address_take", "time", "car", "userProfile",
+                  "status", "driver", "date_create", "date_start", "date_end"]
 
-class BrandSerializer(serializers.ModelSerializer):
-    class Meta:
-        # Модель, которую мы сериализуем
-        model = Brands
-        # Поля, которые мы сериализуем
-        fields = ["pk", "title", "country"]
+# class BrandSerializer(serializers.ModelSerializer):
+#     class Meta:
+#         # Модель, которую мы сериализуем
+#         model = Brands
+#         # Поля, которые мы сериализуем
+#         fields = ["pk", "title", "country"]
 
 class UserSerializer(serializers.ModelSerializer):
     class Meta:
