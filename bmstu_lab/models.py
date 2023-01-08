@@ -7,6 +7,7 @@ from django.contrib.auth.models import User
 
 class UserProfile(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
+    email = models.CharField(max_length=50)
     isManager = models.BooleanField(verbose_name='является Менеджером')
     def __str__(self):
         return f'Клиент {self.id}'

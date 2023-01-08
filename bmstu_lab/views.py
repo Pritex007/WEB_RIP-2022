@@ -39,6 +39,22 @@ class TrackPermissionCheck(permissions.IsAuthenticated):
             except:
                 return False
 
+class OrderPermissionCheck(permissions.IsAuthenticated):
+    def has_permission(self, request, view):
+        print("cool")
+        if request.method == 'GET' or request.method == 'POST':
+            return request.user and request.user.is_authenticated
+        else:
+            user = request.user
+            try:
+                isAuthenticated = user.is_authenticated
+                user_profile = UserProfile.objects.get(user=user)
+
+                print("answer", isAuthenticated and user_profile.isManager)
+                return isAuthenticated and user_profile.isManager
+            except:
+                return False
+
 
 class CheckAuthenticatedView(APIView):
     def get(self, request, format=None):
@@ -95,6 +111,7 @@ class SignupView(APIView):
         data = self.request.data
 
         username = data['username']
+        email = data['email']
         password = data['password']
         re_password = data['re_password']
 
@@ -110,7 +127,7 @@ class SignupView(APIView):
                         user = User.objects.get(id=user.id)
                         user.save()
 
-                        user_profile = UserProfile.objects.create(user=user, isManager=False)
+                        user_profile = UserProfile.objects.create(user=user, isManager=False, email=email)
                         user_profile.save()
 
                         return Response({'success': 'User created successfully'})
@@ -180,7 +197,7 @@ class OrderFilter(filters.FilterSet):
         fields = ['time', 'status']
 
 class CarViewSet(viewsets.ModelViewSet):
-    permissions_classes = (TrackPermissionCheck,)
+    permission_classes = (TrackPermissionCheck,)
     # queryset всех пользователей для фильтрации по дате последнего изменения
     queryset = Cars.objects.all()
     serializer_class = CarSerializer  # Сериализатор для модели
@@ -198,7 +215,7 @@ class CarViewSet(viewsets.ModelViewSet):
 #     serializer_class = DriverSerializer  # Сериализатор для модели
 
 class OrderViewSet(viewsets.ModelViewSet):
-    permission_classes = (permissions.IsAuthenticated, )
+    permission_classes = (OrderPermissionCheck, )
     serializer_class = OrderSerializer
     queryset = Orders.objects.all()
     filter_backends = (DjangoFilterBackend,)
