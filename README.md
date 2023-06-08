@@ -11,7 +11,7 @@ XonestTransport - service for ordering cargo transportation. Customers can choos
 Additional functionality:
 * REST API methods: **GET/POST/PUT/DELETE/PATCH** available by address _http://\<your IP>:\<you port>/api/
 * Snippets API: `http://127.0.0.1:8000/swagger/`
-* Autorization by generating **CSRF token** using **Сookie** session
+* Authorization by generating **CSRF token** using **Сookie** session
 * Using Django **ORM** to interact with the database
 
 ## Frontend
