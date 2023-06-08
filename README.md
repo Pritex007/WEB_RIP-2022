@@ -20,7 +20,7 @@ Additional functionality:
 
 Additional functionality:
 * Using **useContext, useReducer** to store and processing temporary data
-* **Autorization / Registration** functionality
+* **Authorization / Registration** functionality
 * Supports additional functionality to **edit truck, edit clients orders, edit truck collection** title if you logged in as an **admin**
 * Caching chosen types in browser local storage
 
